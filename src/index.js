@@ -15,17 +15,21 @@ const IRC_USERNAME = process.env.IRC_USERNAME
 const IRC_PASSWORD = process.env.IRC_PASSWORD
 
 const client = new irc.Client(IRC_HOST, IRC_USERNAME, {
-    channels: [IRC_CHANNEL],
+    channels: ["#" + IRC_CHANNEL],
     password: IRC_PASSWORD,
     autoRejoin: true,
     autoConnect: true,
+});
+
+client.addListener('error', function(message) {
+    console.log('error: ', message);
 });
 
 // mod -> web
 app.post('/api/message', jsonParser, function(req, res){
 
 	// req.body = { channel = "", playername = "", message = "" }
-	client.say(IRC_CHANNEL, `<${req.body.playername}> ${message}`);
+	client.say("#" + IRC_CHANNEL, `<${req.body.playername}> ${message}`);
 	res.end();
 });
 
