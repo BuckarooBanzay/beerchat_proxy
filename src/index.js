@@ -29,7 +29,7 @@ client.addListener('error', function(message) {
 app.post('/api/message', jsonParser, function(req, res){
 
 	// req.body = { channel = "", playername = "", message = "" }
-	client.say("#" + IRC_CHANNEL, `<${req.body.playername}> ${message}`);
+	client.say("#" + IRC_CHANNEL, `<${req.body.playername}> ${req.body.message}`);
 	res.end();
 });
 
