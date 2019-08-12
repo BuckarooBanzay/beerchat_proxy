@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json()
 
-const irc = require('irc');
+const IRC = require('irc-framework');
 
 const app = express();
 app.use(express.static('public'));
@@ -14,22 +14,32 @@ const IRC_CHANNEL = process.env.IRC_CHANNEL
 const IRC_USERNAME = process.env.IRC_USERNAME
 const IRC_PASSWORD = process.env.IRC_PASSWORD
 
-const client = new irc.Client(IRC_HOST, IRC_USERNAME, {
-    channels: ["#" + IRC_CHANNEL],
-    password: IRC_PASSWORD,
-    autoRejoin: true,
-    autoConnect: true,
+const client = new IRC.Client();
+client.connect({
+	host: IRC_HOST,
+	port: 6667,
+	nick: IRC_USERNAME,
+	auto_reconnect: true
 });
 
-client.addListener('error', function(message) {
-    console.log('error: ', message);
+var channel;
+
+client.on('registered', function() {
+	channel = client.channel("#" + IRC_CHANNEL);
+	channel.join();
+	channel.say("beerchat_proxy connected!");
 });
 
 // mod -> web
 app.post('/api/message', jsonParser, function(req, res){
 
 	// req.body = { channel = "", playername = "", message = "" }
-	client.say("#" + IRC_CHANNEL, (req.body.playername ? `<${req.body.playername}> `) + `${req.body.message}`);
+	if (channel) {
+		channel.say(
+			(req.body.playername ? `<${req.body.playername}> ` : "") +
+			req.body.message
+		);
+	}
 	res.end();
 });
 

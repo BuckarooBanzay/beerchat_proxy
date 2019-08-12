@@ -1,9 +1,4 @@
-FROM ubuntu
-
-RUN apt-get update
-
-# node stuff
-RUN apt-get install -y nodejs npm libicu-dev
+FROM node:alpine
 
 COPY package.json /data/
 COPY src /data/src
