@@ -10,7 +10,6 @@ app.disable('etag');
 
 
 const IRC_HOST = process.env.IRC_HOST
-const IRC_CHANNEL = process.env.IRC_CHANNEL
 const IRC_USERNAME = process.env.IRC_USERNAME
 const IRC_PASSWORD = process.env.IRC_PASSWORD
 
@@ -22,18 +21,35 @@ client.connect({
 	auto_reconnect: true
 });
 
-var channel;
+var channels = {}; // name -> channelObj
+
+// TODO: config
+var channel_map = {
+	"main": "pandorabox",
+	"de": "pandorabox-de",
+	"mod": "pandorabox-mod"
+};
 
 client.on('registered', function() {
-	channel = client.channel("#" + IRC_CHANNEL);
-	channel.join();
-	channel.say("beerchat_proxy connected!");
+
+	Object.keys(channel_map).forEach(name => {
+		var channel = client.channel("#" + name);
+		channel.join();
+		channel.say("beerchat_proxy connected!");
+		channels[name] = channel;
+	});
+
 });
 
 // mod -> web
 app.post('/api/message', jsonParser, function(req, res){
 
 	// req.body = { channel = "", playername = "", message = "" }
+	
+	if (!req.body.channel)
+		return;
+
+	const channel = channels[req.body.channel];
 	if (channel) {
 		channel.say(
 			(req.body.playername ? `<${req.body.playername}> ` : "") +
@@ -42,5 +58,7 @@ app.post('/api/message', jsonParser, function(req, res){
 	}
 	res.end();
 });
+
+// TODO: web -> mod
 
 app.listen(8080, () => console.log('Listening on http://127.0.0.1:8080'));
