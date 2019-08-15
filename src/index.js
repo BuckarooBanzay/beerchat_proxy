@@ -31,14 +31,12 @@ var channel_map = {
 };
 
 client.on('registered', function() {
-
 	Object.keys(channel_map).forEach(name => {
 		var channel = client.channel("#" + name);
 		channel.join();
 		channel.say(`beerchat_proxy connected! ingame-channel: ${name}`);
 		channels[name] = channel;
 	});
-
 });
 
 // mod -> web
@@ -57,6 +55,10 @@ app.post('/api/message', jsonParser, function(req, res){
 		);
 	}
 	res.end();
+});
+
+client.on('message', function(event) {
+	// event = { message }
 });
 
 // TODO: web -> mod
