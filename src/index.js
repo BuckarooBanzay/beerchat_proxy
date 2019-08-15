@@ -35,7 +35,7 @@ client.on('registered', function() {
 	Object.keys(channel_map).forEach(name => {
 		var channel = client.channel("#" + name);
 		channel.join();
-		channel.say("beerchat_proxy connected!");
+		channel.say(`beerchat_proxy connected! ingame-channel: ${name}`);
 		channels[name] = channel;
 	});
 
