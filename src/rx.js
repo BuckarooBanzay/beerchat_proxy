@@ -13,12 +13,14 @@ app.post('/', jsonParser, function(req, res){
 	if (!req.body.channel)
 		return;
 
-	channel.then(ch => {
+	channel
+	.then(ch => {
 		ch.say(
 			(req.body.playername ? `<${req.body.playername}> ` : "") +
 			req.body.message
 		);
-	});
+	})
+	.catch(e => console.log(e));
 
 	res.end();
 });
