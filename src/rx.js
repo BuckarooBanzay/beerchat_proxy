@@ -9,16 +9,23 @@ const channel = require("./channel");
 app.post('/', jsonParser, function(req, res){
 
 	// req.body = { channel = "", playername = "", message = "" }
-	
-	if (!req.body.channel)
-		return;
-
 	channel
 	.then(ch => {
-		ch.say(
-			(req.body.playername ? `<${req.body.playername}> ` : "") +
-			req.body.message
-		);
+		if (!req.body.message){
+			return;
+		}
+
+		if (req.body.channel == "main"){
+			// player message
+			ch.say(
+				(req.body.playername ? `<${req.body.playername}> ` : "") +
+				req.body.message
+			);
+		} else if (!req.body.channel) {
+			// system message
+			ch.say(req.body.message);
+		}
+
 	})
 	.catch(e => console.log(e));
 
