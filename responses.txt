@@ -1,0 +1,42 @@
+beerchat-proxy_1     | message {
+beerchat-proxy_1     |   type: 'privmsg',
+beerchat-proxy_1     |   nick: 'BuckarooBanzai',
+beerchat-proxy_1     |   ident: '~BuckarooB',
+beerchat-proxy_1     |   hostname: '238-51-106-109.dyn.cable.fcom.ch',
+beerchat-proxy_1     |   target: '#pandorabox',
+beerchat-proxy_1     |   group: undefined,
+beerchat-proxy_1     |   message: 'test :)',
+beerchat-proxy_1     |   tags: {},
+beerchat-proxy_1     |   time: undefined,
+beerchat-proxy_1     |   account: undefined,
+beerchat-proxy_1     |   reply: [Function]
+beerchat-proxy_1     | }
+
+beerchat-proxy_1     | message {
+beerchat-proxy_1     |   type: 'privmsg',
+beerchat-proxy_1     |   nick: 'BuckarooBanzai',
+beerchat-proxy_1     |   ident: '~BuckarooB',
+beerchat-proxy_1     |   hostname: '238-51-106-109.dyn.cable.fcom.ch',
+beerchat-proxy_1     |   target: '#pandorabox',
+beerchat-proxy_1     |   group: undefined,
+beerchat-proxy_1     |   message: 'test pandorabot',
+beerchat-proxy_1     |   tags: {},
+beerchat-proxy_1     |   time: undefined,
+beerchat-proxy_1     |   account: undefined,
+beerchat-proxy_1     |   reply: [Function]
+beerchat-proxy_1     | }
+
+beerchat-proxy_1     | message {
+beerchat-proxy_1     |   type: 'privmsg',
+beerchat-proxy_1     |   nick: 'BuckarooBanzai',
+beerchat-proxy_1     |   ident: '~BuckarooB',
+beerchat-proxy_1     |   hostname: '238-51-106-109.dyn.cable.fcom.ch',
+beerchat-proxy_1     |   target: 'pandorabot',
+beerchat-proxy_1     |   group: undefined,
+beerchat-proxy_1     |   message: 'xy z',
+beerchat-proxy_1     |   tags: {},
+beerchat-proxy_1     |   time: undefined,
+beerchat-proxy_1     |   account: undefined,
+beerchat-proxy_1     |   reply: [Function]
+beerchat-proxy_1     | }
+
