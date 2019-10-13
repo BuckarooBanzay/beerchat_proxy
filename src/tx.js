@@ -13,6 +13,7 @@ client.on('message', function(event) {
 	if (event.type != "privmsg")
 		return;
 
+	buffer.push(event)
 	events.emit("message", event);
 });
 
@@ -26,6 +27,10 @@ app.get('/', function(req, res){
 	}
 
 	function sendEvent(event){
+		if (!event) {
+			return
+		}
+		
 		var channel;
 		var direct = false;
 
@@ -57,13 +62,13 @@ app.get('/', function(req, res){
 	// async event case
 	function evtHandler(e){
 		clearTimeout(handle);
-		sendEvent(e);
+		sendEvent(buffer.shift());
 	}
 
 	// timeout case
 	handle = setTimeout(() => {
 		res.json({});
-		events.off("message", evtHandler);
+		events.removeListener("message", evtHandler);
 	}, 20000);
 
 	events.once("message", evtHandler);
