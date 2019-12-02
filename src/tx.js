@@ -1,6 +1,6 @@
 
-const IRC_CHANNEL = process.env.IRC_CHANNEL
-const IRC_USERNAME = process.env.IRC_USERNAME
+const IRC_CHANNEL = process.env.IRC_CHANNEL;
+const IRC_USERNAME = process.env.IRC_USERNAME;
 
 const app = require("./app");
 const client = require('./irc_client');
@@ -13,7 +13,7 @@ client.on('message', function(event) {
 	if (event.type != "privmsg")
 		return;
 
-	buffer.push(event)
+	buffer.push(event);
 	events.emit("message", event);
 });
 
@@ -28,7 +28,7 @@ app.get('/', function(req, res){
 
 	function sendEvent(event){
 		if (!event) {
-			return
+			return;
 		}
 		
 		var channel;
@@ -60,7 +60,7 @@ app.get('/', function(req, res){
 	var handle;
 
 	// async event case
-	function evtHandler(e){
+	function evtHandler(){
 		clearTimeout(handle);
 		sendEvent(buffer.shift());
 	}
@@ -72,4 +72,4 @@ app.get('/', function(req, res){
 	}, 20000);
 
 	events.once("message", evtHandler);
-})
+});

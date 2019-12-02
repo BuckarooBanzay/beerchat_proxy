@@ -1,5 +1,5 @@
-const bodyParser = require('body-parser')
-const jsonParser = bodyParser.json()
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 
 const app = require("./app");
 

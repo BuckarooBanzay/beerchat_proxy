@@ -1,5 +1,5 @@
 const client = require('./irc_client');
-const channel_map = require("./channel_map');
+const channel_map = require("./channel_map");
 
 var channels = {}; // name -> channelObj
 
