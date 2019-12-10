@@ -1,15 +1,14 @@
 
-const IRC_CHANNEL = process.env.IRC_CHANNEL;
-const IRC_USERNAME = process.env.IRC_USERNAME;
-
 const app = require("./app");
-const client = require('./irc_client');
+const irc_client = require('./irc_client');
+const cfg = require("./config");
+
 const EventEmitter = require("events");
 
 var buffer = [];
 var events = new EventEmitter();
 
-client.on('message', function(event) {
+irc_client.on('message', function(event) {
 	if (event.type != "privmsg")
 		return;
 
@@ -30,21 +29,25 @@ app.get('/', function(req, res){
 		if (!event) {
 			return;
 		}
-		
-		var channel;
+
+		var channel_name;
 		var direct = false;
 
-		if (event.target == "#" + IRC_CHANNEL){
-			channel = "main";
-		}
+		Object.keys(cfg.channels).forEach(ingame_name => {
+			const irc_name = cfg.channels[ingame_name];
 
-		if (event.target == IRC_USERNAME){
+			if (event.target == "#" + irc_name){
+				channel_name = ingame_name;
+			}
+		});
+
+		if (event.target == cfg.username){
 			direct = true;
 		}
 
 		res.json({
 			direct: direct,
-			channel: channel,
+			channel: channel_name,
 			username: event.nick,
 			message: event.message
 		});

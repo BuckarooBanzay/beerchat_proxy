@@ -1,16 +1,18 @@
-const client = require('./irc_client');
-const channel_map = require("./channel_map");
+const irc_client = require('./irc_client');
+const cfg = require("./config");
 
-var channels = {}; // name -> channelObj
+module.exports = new Promise(resolve => {
+	var channels = {}; // name -> channelObj
 
+	irc_client.on('registered', function() {
+		Object.keys(cfg.channels).forEach(ingame_name => {
+			const irc_name = cfg.channels[ingame_name];
+			var channel = irc_client.channel("#" + irc_name);
+			channel.join();
+			channel.say(`beerchat_proxy connected! ingame-channel: ${irc_name}`);
+			channels[ingame_name] = channel;
+		});
 
-client.on('registered', function() {
-	Object.keys(channel_map).forEach(name => {
-		var channel = client.channel("#" + name);
-		channel.join();
-		channel.say(`beerchat_proxy connected! ingame-channel: ${name}`);
-		channels[name] = channel;
+		resolve(channels);
 	});
 });
-
-module.exports = channels;

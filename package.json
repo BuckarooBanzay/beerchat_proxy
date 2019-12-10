@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jshint src"
+    "test": "jshint src",
+    "start": "node js/index.js"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pandorabox-io/beerchat_proxy/issues"
+    "url": "https://github.com/minetest-beerchat/beerchat_proxy/issues"
   },
-  "homepage": "https://github.com/pandorabox-io/beerchat_proxy#readme",
+  "homepage": "https://github.com/minetest-beerchat/beerchat_proxy#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",

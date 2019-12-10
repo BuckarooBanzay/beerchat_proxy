@@ -1,22 +1,16 @@
-
+const cfg = require("./config");
 const IRC = require('irc-framework');
-
-const IRC_HOST = process.env.IRC_HOST;
-const IRC_USERNAME = process.env.IRC_USERNAME;
-const IRC_PASSWORD = process.env.IRC_PASSWORD;
-const ENABLE_DEBUG = process.env.ENABLE_DEBUG;
-
 
 const client = new IRC.Client();
 client.connect({
-	host: IRC_HOST,
-	port: 6667,
-	nick: IRC_USERNAME,
-	password: IRC_PASSWORD,
+	host: cfg.host,
+	port: cfg.port,
+	nick: cfg.username,
+	password: cfg.password,
 	auto_reconnect: true
 });
 
-if (ENABLE_DEBUG == "true") {
+if (cfg.debug) {
 	client.on("debug", function(e){
 		console.log(e);
 	});

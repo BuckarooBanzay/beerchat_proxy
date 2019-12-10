@@ -2,28 +2,30 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
 const app = require("./app");
-
-const channel = require("./channel");
+const client_map = require("./client_map");
 
 // mod -> web
 app.post('/', jsonParser, function(req, res){
 
 	// req.body = { channel = "", playername = "", message = "" }
-	channel
-	.then(ch => {
+	client_map.then(channels => {
 		if (!req.body.message){
 			return;
 		}
 
-		if (req.body.channel == "main"){
+		const channel = channels[req.body.channel];
+		const main_channel = channels.main;
+
+		if (channel){
 			// player message
-			ch.say(
+			channel.say(
 				(req.body.playername ? `<${req.body.playername}> ` : "") +
 				req.body.message
 			);
+
 		} else if (!req.body.channel) {
 			// system message
-			ch.say(req.body.message);
+			main_channel.say(req.body.message);
 		}
 
 	})

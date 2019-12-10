@@ -1,0 +1,8 @@
+{
+  "host": "chat.freenode.net",
+  "username": "pandorabot_test",
+  "password": "xyz",
+  "channels": {
+    "main": "pandorabox-test"
+  }
+}
