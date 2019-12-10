@@ -9,7 +9,7 @@ module.exports = new Promise(resolve => {
 			const irc_name = cfg.channels[ingame_name];
 			var channel = irc_client.channel("#" + irc_name);
 			channel.join();
-			channel.say(`beerchat_proxy connected! ingame-channel: ${irc_name}`);
+			channel.say(`beerchat_proxy connected! ingame-channel: ${ingame_name}`);
 			channels[ingame_name] = channel;
 		});
 
