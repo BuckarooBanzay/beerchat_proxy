@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jshint src",
-    "start": "node js/index.js"
+    "start": "node src/index.js"
   },
   "author": "",
   "license": "ISC",
