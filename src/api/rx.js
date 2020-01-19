@@ -1,8 +1,8 @@
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const app = require("./app");
-const client_map = require("./client_map");
+const app = require("../app");
+const client_map = require("../client_map");
 
 // mod -> web
 app.post('/', jsonParser, function(req, res){

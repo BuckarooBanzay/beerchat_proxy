@@ -1,7 +1,7 @@
 
-const app = require("./app");
-const irc_client = require('./irc_client');
-const cfg = require("./config");
+const app = require("../app");
+const irc_client = require('../irc_client');
+const cfg = require("../config");
 
 const EventEmitter = require("events");
 
