@@ -1,20 +1,10 @@
 
 const app = require("../app");
-const irc_client = require('../irc_client');
 const cfg = require("../config");
-
-const EventEmitter = require("events");
+const events = require("../events");
 
 var buffer = [];
-var events = new EventEmitter();
-
-irc_client.on('message', function(event) {
-	if (event.type != "privmsg")
-		return;
-
-	buffer.push(event);
-	events.emit("message", event);
-});
+events.on("message", e => buffer.push(e));
 
 
 // web -> mod

@@ -1,5 +1,6 @@
 const cfg = require("./config");
 const IRC = require('irc-framework');
+const events = require("./events");
 
 const client = new IRC.Client();
 client.connect({
@@ -15,5 +16,13 @@ if (cfg.debug) {
 		console.log(e);
 	});
 }
+
+
+client.on('message', function(event) {
+	if (event.type != "privmsg")
+		return;
+
+	events.emit("message", event);
+});
 
 module.exports = client;

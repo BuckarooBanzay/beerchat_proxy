@@ -1,4 +1,4 @@
 
 const EventEmitter = require("events");
 
-export default new EventEmitter();
+module.exports = new EventEmitter();
