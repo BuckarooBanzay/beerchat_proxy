@@ -9,6 +9,7 @@ module.exports = function(remotes, events){
         return;
       }
 
+      // dispatch to remotes
       events.emit("message-out", {
         type: event.type,
         name: remote.name,
@@ -17,6 +18,17 @@ module.exports = function(remotes, events){
         message: event.message
       })
     });
+
+    if (event.type != "minetest") {
+      // dispatch to ingame too
+      events.emit("message-out", {
+        type: event.type,
+        name: "minetest",
+        username: event.username,
+        channel: event.channel,
+        message: event.message
+      })
+    }
   });
 
 }

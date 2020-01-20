@@ -39,13 +39,19 @@ module.exports = function(remote, events){
     if (event.type != "privmsg")
       return;
 
-    //TODO: map ingame channel
+    var channel = "";
+    Object.keys(remote.channels).forEach(ingame_channel => {
+      const irc_channel = remote.channels[ingame_channel];
+      if (irc_channel == event.target){
+        channel = ingame_channel;
+      }
+    });
 
     events.emit("message-in", {
       type: "irc",
       name: remote.name,
       username: event.nick,
-      channel: event.target,
+      channel: ingame_channel,
       message: event.message
     })
   });
@@ -61,7 +67,7 @@ module.exports = function(remote, events){
 
     const channel = channels[event.channel]
     if (channel) {
-      channel.say(`<${event.username}> ${event.message}`)
+      channel.say(`<${event.username}${event.type == "minetest" ? "" : event.type}> ${event.message}`)
     }
   });
 }
