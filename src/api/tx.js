@@ -1,6 +1,5 @@
 
 const app = require("../app");
-const cfg = require("../config");
 const events = require("../events");
 
 var buffer = [];

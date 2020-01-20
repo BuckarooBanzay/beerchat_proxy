@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-module.exports = function(remote, events){
+module.exports = function(remote){
   Object.keys(remote.channels).forEach(ingame_channel => {
     const token = remote.channels[ingame_channel];
     const client = new Discord.Client();
@@ -15,6 +15,6 @@ module.exports = function(remote, events){
       }
     });
 
-    client.login(token);    
+    client.login(token);
   });
-}
+};

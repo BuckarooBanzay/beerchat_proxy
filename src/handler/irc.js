@@ -27,13 +27,11 @@ module.exports = function(remote, events){
       channel.say(`beerchat_proxy connected! ingame-channel: ${ingame_name}`);
       channels[ingame_name] = channel;
     });
-
-    resolve(channels);
   });
 
   client.on('message', function(event) {
     if (remote.debug){
-      console.log("irc-event-in", event)
+      console.log("irc-event-in", event);
     }
 
     if (event.type != "privmsg")
@@ -51,9 +49,9 @@ module.exports = function(remote, events){
       type: "irc",
       name: remote.name,
       username: event.nick,
-      channel: ingame_channel,
+      channel: channel,
       message: event.message
-    })
+    });
   });
 
   events.on("message-out", function(event){
@@ -62,12 +60,12 @@ module.exports = function(remote, events){
       return;
 
     if (remote.debug){
-      console.log("irc-message-out", event)
+      console.log("irc-message-out", event);
     }
 
-    const channel = channels[event.channel]
+    const channel = channels[event.channel];
     if (channel) {
-      channel.say(`<${event.username}${event.type == "minetest" ? "" : event.type}> ${event.message}`)
+      channel.say(`<${event.username}${event.type == "minetest" ? "" : event.type}> ${event.message}`);
     }
   });
-}
+};

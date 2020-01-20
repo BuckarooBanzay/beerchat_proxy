@@ -16,7 +16,7 @@ module.exports = function(remotes, events){
         username: event.username,
         channel: event.channel,
         message: event.message
-      })
+      });
     });
 
     if (event.type != "minetest") {
@@ -27,8 +27,8 @@ module.exports = function(remotes, events){
         username: event.username,
         channel: event.channel,
         message: event.message
-      })
+      });
     }
   });
 
-}
+};
