@@ -55,7 +55,7 @@ module.exports = function(remote, events){
   });
 
   events.on("message-out", function(event){
-    if (event.name != remote.name)
+    if (event.name == remote.name)
       //not meant for this remote, ignore
       return;
 

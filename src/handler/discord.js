@@ -7,7 +7,7 @@ module.exports = function(remote, events){
 		console.log(`Logged in as ${client.user.tag}!`);
 
 		events.on("message-out", function(event){
-			if (event.name != remote.name)
+			if (event.name == remote.name)
 				//not meant for this remote, ignore
 				return;
 
@@ -31,6 +31,10 @@ module.exports = function(remote, events){
 	});
 
 	client.on('message', msg => {
+		if (msg.author.bot){
+			// ignore other bots
+			return;
+		}
 		console.log("discord-bot", msg.channel.type, msg.channel.name, msg.content, msg.author.username);
 
 		var ingame_channel = "";
