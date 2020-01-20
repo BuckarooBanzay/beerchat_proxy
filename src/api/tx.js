@@ -21,7 +21,6 @@ app.get('/', function(req, res){
 		}
 
 		var channel_name;
-		var direct = false;
 
 		Object.keys(cfg.channels).forEach(ingame_name => {
 			const irc_name = cfg.channels[ingame_name];
@@ -31,14 +30,10 @@ app.get('/', function(req, res){
 			}
 		});
 
-		if (event.target == cfg.username){
-			direct = true;
-		}
-
 		res.json({
-			direct: direct,
-			channel: channel_name,
-			username: event.nick,
+			source_system: event.source_system,
+			target: channel_name, // mapped channel name: "#main", "#lag"
+			source: event.nick, // "somedude"
 			message: event.message
 		});
 	}

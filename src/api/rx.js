@@ -13,21 +13,17 @@ app.post('/', jsonParser, function(req, res){
 			return;
 		}
 
-		const channel = channels[req.body.channel];
+		const channel = channels[req.body.source_channel];
 		const main_channel = channels.main;
 
 		if (channel){
 			// player message
 			channel.say(
-				(req.body.playername ? `<${req.body.playername}> ` : "") +
+				(req.body.source ? `<${req.body.source}> ` : "") +
 				req.body.message
 			);
 
-		} else if (!req.body.channel) {
-			// system message
-			main_channel.say(req.body.message);
 		}
-
 	})
 	.catch(e => console.log(e));
 
