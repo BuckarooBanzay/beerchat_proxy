@@ -7,7 +7,7 @@ const events = require("../events");
 // mod -> web
 app.post('/', jsonParser, function(req, res){
 
-	// delegate to events bus
+	// delegate to event bus
 	events.emit("message-in", {
 		type: "minetest",
 		name: "minetest",

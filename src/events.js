@@ -16,7 +16,7 @@ Events:
   // the source username
   username: "SomeDude",
 
-  // the ingame channel: "#main", "#lag", etc
+  // the ingame channel: "main", "lag", etc
   channel: "main",
 
   //the actual message

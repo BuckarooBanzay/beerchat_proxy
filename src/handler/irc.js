@@ -32,14 +32,32 @@ module.exports = function(remote, events){
   });
 
   client.on('message', function(event) {
-    //TODO: mapping and events.emit("message-in", {})
-    console.log("irc-message-in", event)
+    if (remote.debug){
+      console.log("irc-event-in", event)
+    }
+
+    if (event.type != "privmsg")
+      return;
+
+    //TODO: map ingame channel
+
+    events.emit("message-in", {
+      type: "irc",
+      name: remote.name,
+      username: event.nick,
+      channel: event.target,
+      message: event.message
+    })
   });
 
   events.on("message-out", function(event){
     if (event.name != remote.name)
       //not meant for this remote, ignore
       return;
+
+    if (remote.debug){
+      console.log("irc-message-out", event)
+    }
 
     const channel = channels[event.channel]
     if (channel) {
