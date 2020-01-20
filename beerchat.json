@@ -1,9 +1,10 @@
 {
   "debug": true,
-  
+
   "remotes": [{
     "name": "freenode",
     "type": "irc",
+		"debug": true,
     "host": "chat.freenode.net",
     "username": "pandorabot_test",
     "password": "abcxyz",
@@ -13,8 +14,10 @@
   },{
     "name": "discord",
     "type": "discord",
+		"debug": true,
+		"token": "NjY4ODUyOTExOTYyNTg3MTU2.XiXUCg.7fp0uO1hw3E8QHsI8EBeB2pgdZ4",
     "channels": {
-      "main": "myToken"
+      "main": "test"
     }
   }]
 }

@@ -1,7 +1,12 @@
 
-module.exports = function(remotes, events){
+module.exports = function(cfg, events){
+	const remotes = cfg.remotes;
   events.on("message-in", function(event){
     // dispatch to other systems as message-out event with their names
+
+		if (cfg.debug){
+			console.log("message-in", event);
+		}
 
     remotes.forEach(remote => {
       if (event.name == remote.name){
@@ -12,7 +17,7 @@ module.exports = function(remotes, events){
       // dispatch to remotes
       events.emit("message-out", {
         type: event.type,
-        name: remote.name,
+        name: event.name,
         username: event.username,
         channel: event.channel,
         message: event.message

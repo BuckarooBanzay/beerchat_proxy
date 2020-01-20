@@ -21,6 +21,6 @@ cfg.remotes.forEach(remote => {
 });
 
 console.log("Starting message router");
-router(cfg.remotes, events);
+router(cfg, events);
 
 app.listen(8080, () => console.log('Listening on http://127.0.0.1:8080'));

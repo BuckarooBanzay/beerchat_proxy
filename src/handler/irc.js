@@ -40,7 +40,7 @@ module.exports = function(remote, events){
     var channel = "";
     Object.keys(remote.channels).forEach(ingame_channel => {
       const irc_channel = remote.channels[ingame_channel];
-      if (irc_channel == event.target){
+      if (irc_channel == event.target.substr(1)){
         channel = ingame_channel;
       }
     });
@@ -65,7 +65,7 @@ module.exports = function(remote, events){
 
     const channel = channels[event.channel];
     if (channel) {
-      channel.say(`<${event.username}${event.type == "minetest" ? "" : event.type}> ${event.message}`);
+			channel.say(`<${event.username}${event.type == "minetest" ? "" : "@" + event.name}> ${event.message}`);
     }
   });
 };
