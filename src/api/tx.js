@@ -4,43 +4,24 @@ const cfg = require("../config");
 const events = require("../events");
 
 var buffer = [];
-events.on("message", e => buffer.push(e));
+events.on("message-out", e => {
+	if (e.name == "minetest")
+		buffer.push(e);
+});
 
 
 // web -> mod
 app.get('/', function(req, res){
 
 	// buffer full, flush
-	if (buffer.length > 20){
+	if (buffer.length > 50){
 		buffer = [];
-	}
-
-	function sendEvent(event){
-		if (!event) {
-			return;
-		}
-
-		var channel_name;
-
-		Object.keys(cfg.channels).forEach(ingame_name => {
-			const irc_name = cfg.channels[ingame_name];
-
-			if (event.target == "#" + irc_name){
-				channel_name = ingame_name;
-			}
-		});
-
-		res.json({
-			source_system: event.source_system,
-			target: channel_name, // mapped channel name: "#main", "#lag"
-			source: event.nick, // "somedude"
-			message: event.message
-		});
 	}
 
 	// buffered case
 	if (buffer.length > 0){
-		sendEvent(buffer.shift());
+		res.json(buffer);
+		buffer = [];
 		return;
 	}
 
@@ -48,16 +29,19 @@ app.get('/', function(req, res){
 	var handle;
 
 	// async event case
-	function evtHandler(){
-		clearTimeout(handle);
-		sendEvent(buffer.shift());
+	function evtHandler(e){
+		if (e.name == "minetest"){
+			clearTimeout(handle);
+			res.json(buffer);
+			buffer = [];
+		}
 	}
 
 	// timeout case
 	handle = setTimeout(() => {
-		res.json({});
-		events.removeListener("message", evtHandler);
+		res.json([]);
+		events.removeListener("message-out", evtHandler);
 	}, 20000);
 
-	events.once("message", evtHandler);
+	events.once("message-out", evtHandler);
 });

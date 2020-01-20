@@ -3,21 +3,21 @@
 Events:
 
 
-## "message"
+## "message-in" / "message-out"
 
 {
   // source messaging system
   // "irc", "discord", "minetest", etc
-  source_system: "irc"
+  type: "irc",
 
-  // the target channel/username
-  target: "#main",
+  // the name of the remote system
+  name: "freenode",
 
   // the source username
-  source; "SomeDude",
+  username: "SomeDude",
 
-  // the source channel: "#main", "#lag", etc
-  source_channel: "",
+  // the ingame channel: "#main", "#lag", etc
+  channel: "main",
 
   //the actual message
   message: "xyz",

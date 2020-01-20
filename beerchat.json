@@ -1,8 +1,20 @@
 {
-  "host": "chat.freenode.net",
-  "username": "pandorabot_test",
-  "password": "abcxyz",
-  "channels": {
-    "main": "pandorabox-test"
-  }
+  "debug": true,
+  
+  "remotes": [{
+    "name": "freenode",
+    "type": "irc",
+    "host": "chat.freenode.net",
+    "username": "pandorabot_test",
+    "password": "abcxyz",
+    "channels": {
+      "main": "pandorabox-test"
+    }
+  },{
+    "name": "discord",
+    "type": "discord",
+    "channels": {
+      "main": "myToken"
+    }
+  }]
 }
