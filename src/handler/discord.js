@@ -15,7 +15,7 @@ module.exports = function(remote, events){
 				console.log("Discord-message-out", event);
 			}
 
-			const discord_channel_name = remote.channels[event.channel];
+			const discord_channel_name = event.channel ? remote.channels[event.channel] : remote.channels[remote.system_channel];
 			if (!discord_channel_name){
 				console.warn("discord, not mapped channel found", event.channel);
 				return;
@@ -23,7 +23,12 @@ module.exports = function(remote, events){
 
 			const channel = client.channels.find(ch => ch.name == discord_channel_name);
 			if (channel) {
-	      channel.send(`<${event.username}${event.type == "minetest" ? "" : "@" + event.name}> ${event.message}`);
+				if (event.username){
+					channel.send(`<${event.username}${event.type == "minetest" ? "" : "@" + event.name}> ${event.message}`);
+				} else {
+					channel.send(`${event.message}`);
+				}
+
 	    } else {
 				console.warn("discord, no channel found", discord_channel_name);
 			}

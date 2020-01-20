@@ -4,7 +4,7 @@ const events = require("../events");
 
 var buffer = [];
 events.on("message-out", e => {
-	if (e.name == "minetest")
+	if (e.name != "minetest")
 		buffer.push(e);
 });
 
@@ -29,7 +29,7 @@ app.get('/', function(req, res){
 
 	// async event case
 	function evtHandler(e){
-		if (e.name == "minetest"){
+		if (e.name != "minetest"){
 			clearTimeout(handle);
 			res.json(buffer);
 			buffer = [];

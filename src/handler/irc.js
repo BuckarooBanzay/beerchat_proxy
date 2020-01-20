@@ -63,9 +63,13 @@ module.exports = function(remote, events){
       console.log("irc-message-out", event);
     }
 
-    const channel = channels[event.channel];
+    const channel = event.channel ? channels[event.channel] : channels[remote.system_channel];
     if (channel) {
-			channel.say(`<${event.username}${event.type == "minetest" ? "" : "@" + event.name}> ${event.message}`);
+			if (event.username){
+				channel.say(`<${event.username}${event.type == "minetest" ? "" : "@" + event.name}> ${event.message}`);
+			} else {
+				channel.say(`${event.message}`);
+			}
     }
   });
 };
