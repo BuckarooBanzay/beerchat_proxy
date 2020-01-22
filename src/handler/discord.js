@@ -15,7 +15,15 @@ module.exports = function(remote, events){
 				console.log("Discord-message-out", event);
 			}
 
-			const discord_channel_name = event.channel ? remote.channels[event.channel] : remote.channels[remote.system_channel];
+			let discord_channel_name;
+
+			if (event.channel != null)
+				// channel name sent, map to config channels
+				discord_channel_name = remote.channels[event.channel];
+			else
+				// no channel sent, assuming system message
+				discord_channel_name = remote.channels[remote.system_channel];
+
 			if (!discord_channel_name){
 				console.warn("discord, not mapped channel found", event.channel);
 				return;

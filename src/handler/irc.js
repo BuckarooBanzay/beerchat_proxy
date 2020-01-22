@@ -63,7 +63,15 @@ module.exports = function(remote, events){
       console.log("irc-message-out", event);
     }
 
-    const channel = event.channel ? channels[event.channel] : channels[remote.system_channel];
+    let channel;
+
+		if (event.channel != null)
+			// channel name sent, map to config channels
+			channel = channels[event.channel];
+		else
+			// no channel sent, assuming system message
+			channel = channels[remote.system_channel];
+
     if (channel) {
 			if (event.username){
 				channel.say(`<${event.username}${event.type == "minetest" ? "" : "@" + event.name}> ${event.message}`);
