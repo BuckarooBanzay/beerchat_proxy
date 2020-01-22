@@ -45,6 +45,11 @@ beerchat.json
     }
   }]
 }
+```
 
-}
+## Starting
+
+```
+npm install
+npm start
 ```
