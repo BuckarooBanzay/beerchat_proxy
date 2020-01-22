@@ -1,10 +1,11 @@
 
+Beerchat proxy application
 
-## Compile deps
+Relay for minetest-ingame / IRC and Discord
 
-```
-apt install libicu-dev
-```
+![](https://github.com/minetest-beerchat/beerchat_proxy/workflows/jshint/badge.svg)
+![](https://github.com/minetest-beerchat/beerchat_proxy/workflows/docker/badge.svg)
+
 
 ## Local Testing
 
@@ -20,13 +21,30 @@ curl -X POST \
 beerchat.json
 ```json
 {
-  "host": "chat.freenode.net",
-  "username": "pandorabot",
-  "password": "abcd",
-  "channels": {
-    "main": "pandorabox",
-    "de": "pandorabox-de",
-    "mod": "pandorabox-mod"
-  }
+  "debug": true,
+
+  "remotes": [{
+    "name": "IRC",
+    "type": "irc",
+		"debug": true,
+    "host": "chat.freenode.net",
+    "username": "pandorabot_test",
+    "password": "my-password",
+		"system_channel": "main",
+    "channels": {
+      "main": "pandorabox-test"
+    }
+  },{
+    "name": "Discord",
+    "type": "discord",
+		"debug": true,
+		"token": "the-discord-token",
+		"system_channel": "main",
+    "channels": {
+      "main": "test"
+    }
+  }]
+}
+
 }
 ```
