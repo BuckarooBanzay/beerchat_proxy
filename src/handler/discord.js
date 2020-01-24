@@ -48,23 +48,22 @@ module.exports = function(remote, events){
 			// ignore other bots
 			return;
 		}
-		console.log("discord-bot", msg.channel.type, msg.channel.name, msg.content, msg.author.username);
 
 		var ingame_channel = "";
-
 		Object.keys(remote.channels).forEach(mapped_channel => {
 			if (remote.channels[mapped_channel] == msg.channel.name)
 				ingame_channel = mapped_channel;
 		});
 
-		// "dm" == direct
-		if (msg.channel.type == "text"){
+		if (msg.channel.type == "text") { //}) || msg.channel.type == "dm") {
+			// broadcast/channel message
 			events.emit("message-in", {
 	      type: "discord",
 	      name: remote.name,
 	      username: msg.author.username,
 	      channel: ingame_channel,
-	      message: msg.content
+	      message: msg.content,
+				direct: msg.channel.type == "dm" //direct flag / PM
 	    });
 		}
 	});

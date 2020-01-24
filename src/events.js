@@ -21,6 +21,9 @@ Events:
 
   //the actual message
   message: "xyz",
+
+  // true if PM / direct message
+  direct: false
 }
 
 
