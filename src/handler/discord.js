@@ -1,7 +1,9 @@
 const Discord = require('discord.js');
 
 module.exports = function(remote, events){
-	const client = new Discord.Client();
+	const client = new Discord.Client({
+		autoReconnect: true
+	});
 
 	client.on('ready', () => {
 		console.log(`Logged in as ${client.user.tag}!`);
