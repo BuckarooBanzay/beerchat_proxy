@@ -25,7 +25,6 @@ module.exports = function(remote, events){
 				discord_channel_name = remote.channels[remote.system_channel];
 
 			if (!discord_channel_name){
-				console.warn("discord, not mapped channel found", event.channel);
 				return;
 			}
 
