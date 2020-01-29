@@ -33,7 +33,9 @@ module.exports = function(remote, events){
 			const channel = client.channels.find(ch => ch.name == discord_channel_name);
 			if (channel) {
 				if (event.username){
-					channel.send(`<${event.username}${event.type == "minetest" ? "" : "@" + event.name}> ${event.message}`);
+					channel
+						.send(`<${event.username}${event.type == "minetest" ? "" : "@" + event.name}> ${event.message}`)
+						.catch(e => console.warn("discord send error", e));
 				} else {
 					channel.send(`${event.message}`);
 				}
