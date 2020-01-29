@@ -63,7 +63,7 @@ module.exports = function(remote, events){
 	      name: remote.name,
 	      username: msg.author.username,
 	      channel: ingame_channel,
-	      message: msg.content,
+	      message: msg.cleanContent,
 				direct: msg.channel.type == "dm" //direct flag / PM
 	    });
 		}
