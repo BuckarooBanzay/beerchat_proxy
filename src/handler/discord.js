@@ -5,6 +5,14 @@ module.exports = function(remote, events){
 		autoReconnect: true
 	});
 
+	client.on('ready', e => {
+		console.error("error", e);
+	});
+
+	client.on('disconnect', e => {
+		console.error("disconnect", e);
+	});
+
 	client.on('ready', () => {
 		console.log(`Logged in as ${client.user.tag}!`);
 
