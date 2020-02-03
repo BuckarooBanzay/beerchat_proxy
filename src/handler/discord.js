@@ -45,7 +45,9 @@ module.exports = function(remote, events){
 						.send(`<${event.username}${event.type == "minetest" ? "" : "@" + event.name}> ${event.message}`)
 						.catch(e => console.warn("discord send error", e));
 				} else {
-					channel.send(`${event.message}`);
+					channel
+						.send(`${event.message}`)
+						.catch(e => console.warn("discord send error", e));
 				}
 
 	    } else {
@@ -79,5 +81,6 @@ module.exports = function(remote, events){
 		}
 	});
 
-	client.login(remote.token);
+	client.login(remote.token)
+		.catch(e => console.error("login", e));
 };
