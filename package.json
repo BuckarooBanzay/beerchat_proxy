@@ -20,6 +20,6 @@
     "irc-framework": "^4.6.0"
   },
   "devDependencies": {
-    "jshint": "^2.10.3"
+    "jshint": "^2.11.0"
   }
 }
