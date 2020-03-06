@@ -7,7 +7,9 @@ module.exports = function(remote, events){
   	port: remote.port,
   	nick: remote.username,
   	password: remote.password,
-  	auto_reconnect: true
+  	auto_reconnect: true,
+    auto_reconnect_wait: 10000,
+    auto_reconnect_max_retries: 9999
   });
 
   if (remote.debug) {
