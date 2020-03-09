@@ -15,7 +15,7 @@
   "homepage": "https://github.com/minetest-beerchat/beerchat_proxy#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "discord.js": "^11.5.1",
+    "discord.js": "^12.0.2",
     "express": "^4.17.1",
     "irc-framework": "^4.7.0"
   },
