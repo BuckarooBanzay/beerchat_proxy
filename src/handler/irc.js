@@ -76,7 +76,7 @@ module.exports = function(remote, events){
 
     if (event.target_name != null && event.target_name != remote.name){
 			// target_name set but not for this
-			return
+			return;
 		}
 
     if (remote.debug){
