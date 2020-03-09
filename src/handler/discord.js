@@ -38,7 +38,7 @@ module.exports = function(remote, events){
 				return;
 			}
 
-			const channel = client.channels.find(ch => ch.name == discord_channel_name);
+			const channel = client.channels.cache.find(ch => ch.name == discord_channel_name);
 			if (channel) {
 				if (event.username){
 					channel
