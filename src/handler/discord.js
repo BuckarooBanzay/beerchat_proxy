@@ -18,8 +18,14 @@ module.exports = function(remote, events){
 
 		events.on("message-out", function(event){
 			if (event.name == remote.name)
-				//not meant for this remote, ignore
+				// not meant for this remote, ignore
+				// source == destination
 				return;
+
+			if (event.target_name != null && event.target_name != remote.name){
+				// target_name set but not for this
+				return
+			}
 
 			if (remote.debug) {
 				console.log("Discord-message-out", event);
@@ -27,12 +33,22 @@ module.exports = function(remote, events){
 
 			let discord_channel_name;
 
-			if (event.channel != null)
+			if (event.target_username != null){
+				// send PM to discord user
+				const user = client.users.cache.find(u => u.username == event.target_username);
+				if (user != null){
+					user.send(event.message);
+				}
+
+			} else if (event.channel != null) {
 				// channel name sent, map to config channels
 				discord_channel_name = remote.channels[event.channel];
-			else
+
+			} else {
 				// no channel sent, assuming system message
 				discord_channel_name = remote.channels[remote.system_channel];
+
+			}
 
 			if (!discord_channel_name){
 				return;
@@ -62,21 +78,33 @@ module.exports = function(remote, events){
 			return;
 		}
 
+		if (msg.channel.type == "dm") {
+			//Direct message
+			events.emit("message-in", {
+	      type: "discord",
+	      name: remote.name,
+	      username: msg.author.username,
+	      message: msg.cleanContent,
+				target_name: "minetest"
+			})
+
+			return;
+		}
+
 		var ingame_channel = "";
 		Object.keys(remote.channels).forEach(mapped_channel => {
 			if (remote.channels[mapped_channel] == msg.channel.name)
 				ingame_channel = mapped_channel;
 		});
 
-		if (msg.channel.type == "text") { //}) || msg.channel.type == "dm") {
+		if (msg.channel.type == "text") {
 			// broadcast/channel message
 			events.emit("message-in", {
 	      type: "discord",
 	      name: remote.name,
 	      username: msg.author.username,
 	      channel: ingame_channel,
-	      message: msg.cleanContent,
-				direct: msg.channel.type == "dm" //direct flag / PM
+	      message: msg.cleanContent
 	    });
 		}
 	});

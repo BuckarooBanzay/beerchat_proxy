@@ -9,11 +9,21 @@ module.exports = function(cfg, events){
 
 		// dispatch to remotes
 		events.emit("message-out", {
+      // "discord", "irc"
 			type: event.type,
+      // "Discord", "IRC"
 			name: event.name,
-			username: event.username,
+      // "somedude", "SomeDude@IRC", "SomeDude123@Discord"
+      username: event.username,
+      // null, "es", "main"
 			channel: event.channel,
-			message: event.message
+      // "give diamonds pls"
+			message: event.message,
+
+      // null, "SomeDude@IRC"
+      target_username: event.target_username,
+      // null, "minetest", "IRC", "Discord"
+      target_name: event.target_name
 		});
 
   });

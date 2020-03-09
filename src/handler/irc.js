@@ -39,6 +39,19 @@ module.exports = function(remote, events){
     if (event.type != "privmsg")
       return;
 
+    if (event.target == remote.username){
+      //PM from IRC received
+      events.emit("message-in", {
+        type: "discord",
+        name: remote.name,
+        username: event.nick,
+        message: event.message,
+        target_name: "minetest"
+      });
+
+      return;
+    }
+
     var channel = "";
     Object.keys(remote.channels).forEach(ingame_channel => {
       const irc_channel = remote.channels[ingame_channel];
@@ -61,18 +74,30 @@ module.exports = function(remote, events){
       //not meant for this remote, ignore
       return;
 
+    if (event.target_name != null && event.target_name != remote.name){
+			// target_name set but not for this
+			return
+		}
+
     if (remote.debug){
       console.log("irc-message-out", event);
     }
 
     let channel;
 
-		if (event.channel != null)
+    if (event.target_username != null){
+      // send PM to IRC user
+      client.say(event.target_username, event.message);
+
+    } else if (event.channel != null) {
 			// channel name sent, map to config channels
 			channel = channels[event.channel];
-		else
+
+		} else {
 			// no channel sent, assuming system message
 			channel = channels[remote.system_channel];
+
+    }
 
     if (channel) {
 			if (event.username){

@@ -13,7 +13,9 @@ app.post('/', jsonParser, function(req, res){
 		name: "minetest",
 		username: req.body.username,
 		channel: req.body.channel,
-		message: req.body.message
+		message: req.body.message,
+		target_name: req.body.target_name,
+		target_username: req.body.target_username
 	});
 
 	res.end();
