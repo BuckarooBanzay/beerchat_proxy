@@ -22,12 +22,16 @@ module.exports = function(remote, events){
 
   // map channels
   client.on('registered', function() {
+		let delay = 5000;
     Object.keys(remote.channels).forEach(ingame_name => {
-      const irc_name = remote.channels[ingame_name];
-      var channel = client.channel("#" + irc_name);
-      channel.join();
-      channel.say(`beerchat_proxy connected! ingame-channel: ${ingame_name}`);
-      channels[ingame_name] = channel;
+			setTimeout(function(){
+	      const irc_name = remote.channels[ingame_name];
+	      var channel = client.channel("#" + irc_name);
+	      channel.join();
+	      channel.say(`beerchat_proxy connected! ingame-channel: ${ingame_name}`);
+	      channels[ingame_name] = channel;
+			}, delay);
+			delay += 2000;
     });
   });
 
