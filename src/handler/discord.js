@@ -56,16 +56,27 @@ module.exports = function(remote, events){
 
 			const channel = client.channels.cache.find(ch => ch.name == discord_channel_name);
 			if (channel) {
+				let message = "";
+
+				// player message
 				if (event.username){
-					channel
-						.send(`<${event.username}${event.type == "minetest" ? "" : "@" + event.name}> ${event.message}`)
-						.catch(e => console.warn("discord send error", e));
+					const mapped_username = `${event.type == "minetest" ? "" : "@" + event.name}`;
+
+					if (event.message_type == "me"){
+						// me message
+						message = `* ${event.username}${mapped_username}> ${event.message}`;
+					} else {
+						// normal message
+						message = `<${event.username}${mapped_username}> ${event.message}`;
+					}
 				} else {
+					// system message
 					channel
 						.send(`${event.message}`)
 						.catch(e => console.warn("discord send error", e));
 				}
 
+				channel.send(message).catch(e => console.warn("discord send error", e));
 	    } else {
 				console.warn("discord, no channel found", discord_channel_name);
 			}

@@ -20,6 +20,9 @@ module.exports = function(cfg, events){
       // "give diamonds pls"
 			message: event.message,
 
+      // "me", "message"
+      message_type: event.message_type,
+
       // null, "SomeDude@IRC"
       target_username: event.target_username,
       // null, "minetest", "IRC", "Discord"

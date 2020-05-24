@@ -105,8 +105,16 @@ module.exports = function(remote, events){
 
     if (channel) {
 			if (event.username){
-				channel.say(`<${event.username}${event.type == "minetest" ? "" : "@" + event.name}> ${event.message}`);
+        // player message
+        if (event.message_type == "me"){
+          // /me message
+          channel.say(`* ${event.username}${event.type == "minetest" ? "" : "@" + event.name} ${event.message}`);
+        } else {
+          // normal message
+          channel.say(`<${event.username}${event.type == "minetest" ? "" : "@" + event.name}> ${event.message}`);
+        }
 			} else {
+        // system message
 				channel.say(`${event.message}`);
 			}
     }
