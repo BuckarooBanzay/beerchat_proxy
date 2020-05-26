@@ -16,6 +16,15 @@ module.exports = function(remote, events){
 	client.on('ready', () => {
 		console.log(`Logged in as ${client.user.tag}!`);
 
+		// Send connection announcement
+		Object.keys(remote.channels).forEach(ingame_name => {
+			const discord_channel_name = remote.channels[ingame_name];
+			const channel = client.channels.cache.find(ch => ch.name === discord_channel_name);
+			if (channel) {
+				channel.send(`beerchat_proxy connected! ingame-channel: ${ingame_name}`);
+			}
+		});
+
 		events.on("message-out", function(event){
 			if (event.name == remote.name)
 				// not meant for this remote, ignore
