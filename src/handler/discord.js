@@ -73,10 +73,10 @@ module.exports = function(remote, events){
 
 					if (event.message_type == "me"){
 						// me message
-						message = `* ${event.username}${mapped_username} ${event.message}`;
+						message = `* **${event.username}${mapped_username}** ${event.message}`;
 					} else {
 						// normal message
-						message = `<${event.username}${mapped_username}> ${event.message}`;
+						message = `**<${event.username}${mapped_username}>** ${event.message}`;
 					}
 				} else {
 					// system message
