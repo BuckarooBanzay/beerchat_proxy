@@ -1,8 +1,13 @@
 const app = require("./app");
+const enableWs = require('express-ws');
+
+// enable websockets
+enableWs(app);
 
 // load minetest handler api's
 require("./api/rx");
 require("./api/tx");
+require("./api/ws");
 
 const cfg = require("./config");
 const events = require("./events");
