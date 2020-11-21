@@ -10,7 +10,7 @@ docker network create beerchat
 #TODO echo ${BEERCHAT_CONFIG} >> beerchat.json
 
 docker run --name beerchat_proxy --rm \
- -v $(pwd)/test/beerchat-test.json:/data/beerchat.json \
+ -v $(pwd)/test/beerchat-test.js:/data/beerchat.js \
  --network beerchat \
  beerchat_proxy &
 
