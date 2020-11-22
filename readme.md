@@ -19,9 +19,9 @@ curl -X POST \
 
 ## Configuration
 
-beerchat.json
-```json
-{
+beerchat.js
+```js
+module.exports = {
   "debug": true,
 
   "remotes": [{
@@ -45,7 +45,7 @@ beerchat.json
       "main": "test"
     }
   }]
-}
+};
 ```
 
 ## Starting
