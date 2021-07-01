@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+    beerchat:
+        build: .
+        volumes:
+            - "./beerchat.js:/data/beerchat.js"
+        ports:
+            - "8080:8080"

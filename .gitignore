@@ -1,3 +1,2 @@
 node_modules
-beerchat.js
-beerchat
+docker-compose.override.yml
