@@ -46,7 +46,7 @@ module.exports = {
 				if (event.target_username != null){
 					// send PM to discord user
 					const user = client.users.cache.find(u => u.username == event.target_username);
-					if (user != null){
+					if (user != null && event.message != ""){
 						user.send(event.message);
 					}
 
@@ -86,7 +86,9 @@ module.exports = {
 							.catch(e => console.warn("discord send error", e));
 					}
 
-					channel.send(message).catch(e => console.warn("discord send error", e));
+					if (message != ""){
+						channel.send(message).catch(e => console.warn("discord send error", e));
+					}
 			} else {
 					console.warn("discord, no channel found", discord_channel_name);
 				}

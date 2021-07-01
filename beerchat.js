@@ -1,5 +1,6 @@
 module.exports = {
 	"remotes": [{
+		"debug": true,
 		"name": "IRC",
 		"type": "irc",
 		"host": "irc.libera.chat",
@@ -10,6 +11,7 @@ module.exports = {
 			"main": "pandorabox-test"
 		}
 	},{
+		"debug": true,
 		"name": "Discord",
 		"type": "discord",
 		"token": process.env.BEERCHAT_DISCORD_TEST_TOKEN,
