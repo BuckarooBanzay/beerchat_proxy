@@ -8,6 +8,7 @@ enableWs(app);
 require("./api/rx");
 require("./api/tx");
 require("./api/ws");
+require("./api/reconnect");
 
 const cfg = require("./config");
 const events = require("./events");
@@ -22,7 +23,7 @@ cfg.remotes.forEach(remote => {
   const handler = handlers[remote.type];
 
   console.log(`Setting up remote: ${remote.name} with type: ${remote.type}`);
-  handler(remote, events);
+  handler.init(remote, events);
 });
 
 console.log("Starting message router");

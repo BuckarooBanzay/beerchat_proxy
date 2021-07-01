@@ -26,6 +26,10 @@ Events:
   direct: false
 }
 
+## 'reconnect'
+
+(no payload)
+
 
 */
 
