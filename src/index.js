@@ -26,6 +26,10 @@ cfg.remotes.forEach(remote => {
   handler.init(remote, events);
 });
 
+events.on("reconnect", function(){
+  //TODO
+});
+
 console.log("Starting message router");
 router(cfg, events);
 

@@ -1,8 +1,12 @@
 const IRC = require('irc-framework');
+let client;
 
 module.exports = {
+  destroy: function(){
+    client.quit("bye o/");
+  },
   init: function(remote, events){
-    const client = new IRC.Client();
+    client = new IRC.Client();
     client.connect({
       host: remote.host,
       port: remote.port,

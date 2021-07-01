@@ -1,8 +1,12 @@
 const Discord = require('discord.js');
+let client;
 
 module.exports = {
+	destroy: function(){
+		client.destroy();
+	},
 	init: function(remote, events){
-		const client = new Discord.Client({
+		client = new Discord.Client({
 			autoReconnect: true
 		});
 
