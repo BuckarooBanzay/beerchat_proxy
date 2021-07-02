@@ -24,7 +24,7 @@ module.exports = class {
 			Object.keys(remote.channels).forEach(ingame_name => {
 				const discord_channel_name = remote.channels[ingame_name];
 				const channel = this.client.channels.cache.find(ch => ch.name === discord_channel_name);
-				if (channel) {
+				if (channel && remote.announce_channel) {
 					channel.send(`beerchat_proxy connected! ingame-channel: ${ingame_name}`);
 				}
 			});

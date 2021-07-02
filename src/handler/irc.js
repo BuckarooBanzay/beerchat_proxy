@@ -29,11 +29,13 @@ module.exports = class {
     this.client.on('registered', () => {
       let delay = 5000;
       Object.keys(remote.channels).forEach(ingame_name => {
-        setTimeout(function(){
+        setTimeout(() => {
           const irc_name = remote.channels[ingame_name];
           var channel = this.client.channel("#" + irc_name);
           channel.join();
-          channel.say(`beerchat_proxy connected! ingame-channel: ${ingame_name}`);
+          if (remote.announce_channel) {
+            channel.say(`beerchat_proxy connected! ingame-channel: ${ingame_name}`);
+          }
           channels[ingame_name] = channel;
         }, delay);
         delay += 2000;
