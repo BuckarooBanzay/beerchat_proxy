@@ -20,10 +20,11 @@ const handlers = {
 };
 
 cfg.remotes.forEach(remote => {
-  const handler = handlers[remote.type];
+  const Handler = handlers[remote.type];
+  const instance = new Handler();
 
   console.log(`Setting up remote: ${remote.name} with type: ${remote.type}`);
-  handler.init(remote, events);
+  instance.init(remote, events);
 });
 
 events.on("reconnect", function(){

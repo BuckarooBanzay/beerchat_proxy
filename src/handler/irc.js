@@ -1,13 +1,13 @@
 const IRC = require('irc-framework');
-let client;
 
-module.exports = {
-  destroy: function(){
-    client.quit("bye o/");
-  },
-  init: function(remote, events){
-    client = new IRC.Client();
-    client.connect({
+module.exports = class {
+  destroy() {
+    this.client.quit("bye o/");
+  }
+
+  init(remote, events) {
+    this.client = new IRC.Client();
+    this.client.connect({
       host: remote.host,
       port: remote.port,
       nick: remote.username,
@@ -18,7 +18,7 @@ module.exports = {
     });
 
     if (remote.debug) {
-      client.on("debug", function(e){
+      this.client.on("debug", function(e){
         console.log(e);
       });
     }
@@ -26,12 +26,12 @@ module.exports = {
     var channels = {}; // name -> channelObj
 
     // map channels
-    client.on('registered', function() {
+    this.client.on('registered', () => {
       let delay = 5000;
       Object.keys(remote.channels).forEach(ingame_name => {
         setTimeout(function(){
           const irc_name = remote.channels[ingame_name];
-          var channel = client.channel("#" + irc_name);
+          var channel = this.client.channel("#" + irc_name);
           channel.join();
           channel.say(`beerchat_proxy connected! ingame-channel: ${ingame_name}`);
           channels[ingame_name] = channel;
@@ -40,7 +40,7 @@ module.exports = {
       });
     });
 
-    client.on('message', function(event) {
+    this.client.on('message', event => {
       if (remote.debug){
         console.log("irc-event-in", event);
       }
@@ -78,7 +78,7 @@ module.exports = {
       });
     });
 
-    events.on("message-out", function(event){
+    events.on("message-out", event => {
       if (event.name == remote.name)
         //not meant for this remote, ignore
         return;
@@ -96,7 +96,7 @@ module.exports = {
 
       if (event.target_username != null){
         // send PM to IRC user
-        client.say(event.target_username, event.message);
+        this.client.say(event.target_username, event.message);
 
       } else if (event.channel != null) {
         // channel name sent, map to config channels

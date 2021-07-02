@@ -1,36 +1,35 @@
 const Discord = require('discord.js');
-let client;
 
-module.exports = {
-	destroy: function(){
-		client.destroy();
-	},
-	init: function(remote, events){
-		client = new Discord.Client({
+module.exports = class {
+	destroy(){
+		this.client.destroy();
+	}
+	init(remote, events){
+		this.client = new Discord.Client({
 			autoReconnect: true
 		});
 
-		client.on('ready', e => {
+		this.client.on('ready', e => {
 			console.error("error", e);
 		});
 
-		client.on('disconnect', e => {
+		this.client.on('disconnect', e => {
 			console.error("disconnect", e);
 		});
 
-		client.on('ready', () => {
-			console.log(`Logged in as ${client.user.tag}!`);
+		this.client.on('ready', () => {
+			console.log(`Logged in as ${this.client.user.tag}!`);
 
 			// Send connection announcement
 			Object.keys(remote.channels).forEach(ingame_name => {
 				const discord_channel_name = remote.channels[ingame_name];
-				const channel = client.channels.cache.find(ch => ch.name === discord_channel_name);
+				const channel = this.client.channels.cache.find(ch => ch.name === discord_channel_name);
 				if (channel) {
 					channel.send(`beerchat_proxy connected! ingame-channel: ${ingame_name}`);
 				}
 			});
 
-			events.on("message-out", function(event){
+			events.on("message-out", (event) => {
 				if (event.name == remote.name)
 					// not meant for this remote, ignore
 					// source == destination
@@ -49,7 +48,7 @@ module.exports = {
 
 				if (event.target_username != null){
 					// send PM to discord user
-					const user = client.users.cache.find(u => u.username == event.target_username);
+					const user = this.client.users.cache.find(u => u.username == event.target_username);
 					if (user != null && event.message != ""){
 						user.send(event.message);
 					}
@@ -68,7 +67,7 @@ module.exports = {
 					return;
 				}
 
-				const channel = client.channels.cache.find(ch => ch.name == discord_channel_name);
+				const channel = this.client.channels.cache.find(ch => ch.name == discord_channel_name);
 				if (channel) {
 					let message = "";
 
@@ -99,7 +98,7 @@ module.exports = {
 			});
 		});
 
-		client.on('message', msg => {
+		this.client.on('message', msg => {
 			if (msg.author.bot){
 				// ignore other bots
 				return;
@@ -136,7 +135,7 @@ module.exports = {
 			}
 		});
 
-		client.login(remote.token)
+		this.client.login(remote.token)
 			.catch(e => console.error("login", e));
 	}
 };
