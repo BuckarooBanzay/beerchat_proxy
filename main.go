@@ -3,10 +3,14 @@ package main
 import (
 	"beerchat_proxy/discord"
 	"beerchat_proxy/irc"
+	"beerchat_proxy/minetest"
 	"beerchat_proxy/types"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 func createRemote(remoteType string) types.RemoteChat {
@@ -54,13 +58,31 @@ func main() {
 	// name => remotechat-impl
 	remoteMapping := map[string]types.RemoteChat{}
 
+	bus := &MainEventBus{
+		remoteMapping: remoteMapping,
+	}
+
 	for _, remoteConfig := range cfg.Remotes {
 		remote := createRemote(remoteConfig.Type)
 		if remote == nil {
 			panic("Remote not found: " + remoteConfig.Type)
 		}
+		fmt.Printf("Initializing remote '%s'\n", remoteConfig.Name)
+		err = remote.Initialize(bus, remoteConfig)
+		if err != nil {
+			panic(err)
+		}
 		remoteMapping[remoteConfig.Name] = remote
 	}
 
+	minetestRemote := &minetest.MinetestRemoteChat{}
+	minetestRemote.Initialize(bus, nil)
+	remoteMapping["minetest"] = minetestRemote
+
 	fmt.Println("ok")
+
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
+	<-sig
+	fmt.Println("exiting")
 }

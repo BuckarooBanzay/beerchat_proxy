@@ -19,18 +19,18 @@ func (remote *IRCRemoteChat) Initialize(bus types.EventBus, cfg *types.RemoteCon
 	remote.cfg = cfg
 
 	remote.connection = irc.IRC(cfg.Username, cfg.Password)
-	remote.connection.UseTLS = true
+	//remote.connection.UseTLS = true
 	remote.connection.Password = cfg.Password
 	err := remote.connection.Connect(cfg.Host)
 
 	remote.connection.AddCallback("PRIVMSG", func(event *irc.Event) {
-		fmt.Printf("irc event, message: %s, sender: %s, channel: %s", event.Message(), event.Nick, event.Arguments[0])
+		fmt.Printf("irc event, message: %s, sender: %s, channel: %s\n", event.Message(), event.Nick, event.Arguments[0])
 		//TODO
 	})
 
 	go func() {
 		for _, channel := range cfg.Channels {
-			remote.connection.Join(channel)
+			remote.connection.Join("#" + channel)
 			time.Sleep(1 * time.Second)
 		}
 	}()

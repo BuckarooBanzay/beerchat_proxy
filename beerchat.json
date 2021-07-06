@@ -4,7 +4,7 @@
 		"announce_channel": false,
 		"name": "IRC",
 		"type": "irc",
-		"host": "irc.libera.chat",
+		"host": "irc.libera.chat:6667",
 		"username": "beerchat-test",
 		"password": "dummy",
 		"system_channel": "main",
