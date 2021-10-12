@@ -6,7 +6,12 @@ module.exports = class {
 	}
 	init(remote, events){
 		this.client = new Discord.Client({
-			autoReconnect: true
+			autoReconnect: true,
+			intents: [
+				"DIRECT_MESSAGES",
+				"DIRECT_MESSAGE_REACTIONS",
+				"GUILD_MESSAGES"
+			]
 		});
 
 		this.client.on('ready', e => {
