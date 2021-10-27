@@ -1,4 +1,4 @@
-FROM node:16.11.0-alpine
+FROM node:17.0.1-alpine
 
 COPY package.json /data/
 COPY package-lock.json /data/
