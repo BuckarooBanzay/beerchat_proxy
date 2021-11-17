@@ -16,6 +16,7 @@ type DiscordRemoteChat struct {
 func (remote *DiscordRemoteChat) Initialize(bus types.EventBus, cfg *types.RemoteConfig) error {
 	remote.bus = bus
 	remote.cfg = cfg
+	logrus.Debugf("Creating discord connection for '%s'", cfg.Name)
 
 	session, err := discordgo.New("Bot " + cfg.Token)
 	if err != nil {
@@ -24,6 +25,11 @@ func (remote *DiscordRemoteChat) Initialize(bus types.EventBus, cfg *types.Remot
 	remote.session = session
 
 	session.AddHandler(remote.messageCreate)
+
+	err = session.Open()
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

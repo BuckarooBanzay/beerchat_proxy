@@ -1,12 +1,11 @@
 package main
 
 import (
+	"beerchat_proxy/core"
 	"beerchat_proxy/discord"
 	"beerchat_proxy/irc"
 	"beerchat_proxy/minetest"
 	"beerchat_proxy/types"
-	"encoding/json"
-	"io/ioutil"
 	"os"
 	"os/signal"
 	"syscall"
@@ -46,13 +45,12 @@ func (bus *MainEventBus) OnMessageReceived(remote types.RemoteChat, msg *types.M
 
 func main() {
 	logrus.SetLevel(logrus.DebugLevel)
-	cfgfile, err := ioutil.ReadFile("beerchat.json")
+	file, err := os.Open("beerchat.json")
 	if err != nil {
 		panic(err.Error())
 	}
 
-	cfg := &types.Config{}
-	err = json.Unmarshal(cfgfile, cfg)
+	cfg, err := core.ParseConfig(file)
 	if err != nil {
 		panic(err.Error())
 	}

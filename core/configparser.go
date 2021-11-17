@@ -33,6 +33,12 @@ func ParseConfig(r io.Reader) (*types.Config, error) {
 			return nil, err
 		}
 		remote.Password = pw
+
+		token, err := replaceEnvVars(remote.Token)
+		if err != nil {
+			return nil, err
+		}
+		remote.Token = token
 	}
 	return cfg, err
 }
