@@ -2,9 +2,9 @@ package discord
 
 import (
 	"beerchat_proxy/types"
-	"fmt"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/sirupsen/logrus"
 )
 
 type DiscordRemoteChat struct {
@@ -33,10 +33,10 @@ func (remote *DiscordRemoteChat) messageCreate(s *discordgo.Session, m *discordg
 		return
 	}
 
-	fmt.Printf("discord msg, content: %s, username: %s, channel: %s", m.Content, m.Author.Username, m.ChannelID)
+	logrus.Debugf("discord msg, content: %s, username: %s, channel: %s", m.Content, m.Author.Username, m.ChannelID)
 }
 
 func (remote *DiscordRemoteChat) SendMessage(msg *types.Message) error {
-	fmt.Printf("discord, would send %s on channel %s\n", msg.Text, msg.Channel)
+	logrus.Debugf("discord, would send %s on channel %s\n", msg.Text, msg.Channel)
 	return nil
 }

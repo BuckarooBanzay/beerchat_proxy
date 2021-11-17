@@ -2,9 +2,9 @@ package irc
 
 import (
 	"beerchat_proxy/types"
-	"fmt"
 	"time"
 
+	"github.com/sirupsen/logrus"
 	irc "github.com/thoj/go-ircevent"
 )
 
@@ -24,7 +24,7 @@ func (remote *IRCRemoteChat) Initialize(bus types.EventBus, cfg *types.RemoteCon
 	err := remote.connection.Connect(cfg.Host)
 
 	remote.connection.AddCallback("PRIVMSG", func(event *irc.Event) {
-		fmt.Printf("irc event, message: %s, sender: %s, channel: %s\n", event.Message(), event.Nick, event.Arguments[0])
+		logrus.Debugf("irc event, message: %s, sender: %s, channel: %s\n", event.Message(), event.Nick, event.Arguments[0])
 		//TODO
 	})
 
@@ -56,7 +56,7 @@ func (remote *IRCRemoteChat) SendMessage(msg *types.Message) error {
 	mappedChannel := remote.cfg.Channels[msg.Channel]
 	msg.Channel = mappedChannel
 
-	fmt.Printf("irc, Would send %s on channel %s\n", msg.Text, msg.Channel)
+	logrus.Debugf("irc, Would send %s on channel %s\n", msg.Text, msg.Channel)
 	remote.connection.Privmsg(msg.Channel, msg.Text)
 	return nil
 }
