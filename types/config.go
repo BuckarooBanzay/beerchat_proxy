@@ -6,7 +6,7 @@ type Config struct {
 
 type RemoteConfig struct {
 	Name          string            `json:"name"`
-	Type          string            `json:"type"`
+	Type          RemoteType        `json:"type"`
 	Debug         bool              `json:"debug"`
 	Host          string            `json:"host"`
 	Username      string            `json:"username"`

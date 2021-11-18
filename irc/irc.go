@@ -56,7 +56,7 @@ func (remote *IRCRemoteChat) SendMessage(msg *types.Message) error {
 	mappedChannel := remote.cfg.Channels[msg.Channel]
 	msg.Channel = mappedChannel
 
-	logrus.Debugf("irc, Would send %s on channel %s\n", msg.Text, msg.Channel)
-	remote.connection.Privmsg(msg.Channel, msg.Text)
+	logrus.Debugf("irc, Would send %s on channel %s\n", msg.Message, msg.Channel)
+	remote.connection.Privmsg(msg.Channel, msg.Message)
 	return nil
 }

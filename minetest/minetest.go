@@ -16,6 +16,6 @@ func (remote *MinetestRemoteChat) Initialize(bus types.EventBus, cfg *types.Remo
 }
 
 func (remote *MinetestRemoteChat) SendMessage(msg *types.Message) error {
-	fmt.Printf("irc, Would send %s on channel %s\n", msg.Text, msg.Channel)
+	fmt.Printf("irc, Would send %s on channel %s\n", msg.Message, msg.Channel)
 	return nil
 }

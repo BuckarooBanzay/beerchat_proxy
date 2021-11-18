@@ -13,11 +13,11 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func createRemote(remoteType string) types.RemoteChat {
+func createRemote(remoteType types.RemoteType) types.RemoteChat {
 	switch remoteType {
-	case "irc":
+	case types.IRCType:
 		return &irc.IRCRemoteChat{}
-	case "discord":
+	case types.DiscordType:
 		return &discord.DiscordRemoteChat{}
 	default:
 		return nil
