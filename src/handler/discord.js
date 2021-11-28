@@ -108,10 +108,10 @@ module.exports = class {
 			if (msg.channel.type == "dm") {
 				//Direct message
 				events.emit("message-in", {
-			type: "discord",
-			name: remote.name,
-			username: msg.author.username,
-			message: msg.cleanContent,
+					type: "discord",
+					name: remote.name,
+					username: msg.author.username,
+					message: msg.cleanContent,
 					target_name: "minetest"
 				});
 
@@ -127,12 +127,12 @@ module.exports = class {
 			if (msg.channel.type == "text") {
 				// broadcast/channel message
 				events.emit("message-in", {
-			type: "discord",
-			name: remote.name,
-			username: msg.author.username,
-			channel: ingame_channel,
-			message: msg.cleanContent
-			});
+					type: "discord",
+					name: remote.name,
+					username: msg.author.username,
+					channel: ingame_channel,
+					message: msg.cleanContent
+				});
 			}
 		});
 
