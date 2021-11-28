@@ -10,16 +10,12 @@ module.exports = class {
 			intents: [Discord.Intents.FLAGS.GUILDS]
 		});
 
-		this.client.on('ready', e => {
-			console.error("error", e);
-		});
-
 		this.client.on('disconnect', e => {
-			console.error("disconnect", e);
+			console.log("disconnect", e);
 		});
 
-		this.client.on('ready', () => {
-			console.log(`Logged in as ${this.client.user.tag}!`);
+		this.client.once('ready', () => {
+			console.log(`Logged in as ${this.client.user.tag}, debug: ${remote.debug}!`);
 
 			// Send connection announcement
 			Object.keys(remote.channels).forEach(ingame_name => {
@@ -100,7 +96,11 @@ module.exports = class {
 		});
 
 		this.client.on('message', msg => {
-			if (msg.author.bot.tag == this.client.user.tag){
+			if (remote.debug){
+				console.log("discord message", msg.author.tag)
+			}
+
+			if (msg.author.tag == this.client.user.tag){
 				// ignore myself
 				return;
 			}

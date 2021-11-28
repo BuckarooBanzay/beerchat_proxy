@@ -1,6 +1,6 @@
 module.exports = {
 	"remotes": [{
-		"debug": true,
+		"debug": false,
 		"announce_channel": false,
 		"name": "IRC",
 		"type": "irc",
