@@ -100,8 +100,8 @@ module.exports = class {
 		});
 
 		this.client.on('message', msg => {
-			if (msg.author.bot){
-				// ignore other bots
+			if (msg.author.bot.tag == this.client.user.tag){
+				// ignore myself
 				return;
 			}
 
