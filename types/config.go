@@ -2,6 +2,7 @@ package types
 
 type Config struct {
 	Remotes []*RemoteConfig `json:"remotes"`
+	Port    int             `json:"port"`
 }
 
 type RemoteConfig struct {

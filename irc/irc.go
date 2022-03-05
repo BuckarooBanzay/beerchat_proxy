@@ -9,13 +9,13 @@ import (
 )
 
 type IRCRemoteChat struct {
-	bus        types.EventBus
+	ch         chan *types.Message
 	cfg        *types.RemoteConfig
 	connection *irc.Connection
 }
 
-func (remote *IRCRemoteChat) Initialize(bus types.EventBus, cfg *types.RemoteConfig) error {
-	remote.bus = bus
+func (remote *IRCRemoteChat) Initialize(ch chan *types.Message, cfg *types.RemoteConfig) error {
+	remote.ch = ch
 	remote.cfg = cfg
 
 	remote.connection = irc.IRC(cfg.Username, cfg.Password)
@@ -47,7 +47,7 @@ func (remote *IRCRemoteChat) ReceiveMessageSomehowHere(msg *types.Message) {
 		}
 	}
 
-	remote.bus.OnMessageReceived(remote, msg)
+	remote.ch <- msg
 }
 
 func (remote *IRCRemoteChat) SendMessage(msg *types.Message) error {

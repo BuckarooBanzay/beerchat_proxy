@@ -1,6 +1,6 @@
 package types
 
 type RemoteChat interface {
-	Initialize(bus EventBus, cfg *RemoteConfig) error
+	Initialize(ch chan *Message, cfg *RemoteConfig) error
 	SendMessage(msg *Message) error
 }

@@ -1,5 +1,12 @@
 {
+	"port": 8080,
 	"remotes": [{
+		"type": "minetest",
+		"name": "minetest",
+		"options": {
+			"path": "/"
+		}
+	},{
 		"debug": false,
 		"announce_channel": false,
 		"name": "IRC",

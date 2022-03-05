@@ -7,9 +7,8 @@ import (
 	"beerchat_proxy/minetest"
 	"beerchat_proxy/types"
 	"fmt"
+	"net/http"
 	"os"
-	"os/signal"
-	"syscall"
 )
 
 func createRemote(remoteType types.RemoteType) types.RemoteChat {
@@ -18,27 +17,10 @@ func createRemote(remoteType types.RemoteType) types.RemoteChat {
 		return &irc.IRCRemoteChat{}
 	case types.DiscordType:
 		return &discord.DiscordRemoteChat{}
+	case types.MinetestType:
+		return &minetest.MinetestRemoteChat{}
 	default:
 		return nil
-	}
-}
-
-type MainEventBus struct {
-	remoteMapping map[string]types.RemoteChat
-}
-
-func (bus *MainEventBus) OnMessageReceived(remote types.RemoteChat, msg *types.Message) {
-
-	for _, outRemote := range bus.remoteMapping {
-		// same remote, don't send it
-		if outRemote == remote {
-			continue
-		}
-
-		err := outRemote.SendMessage(msg)
-		if err != nil {
-			fmt.Printf("Could not send message: %s\n", err.Error())
-		}
 	}
 }
 
@@ -56,9 +38,7 @@ func main() {
 	// name => remotechat-impl
 	remoteMapping := map[string]types.RemoteChat{}
 
-	bus := &MainEventBus{
-		remoteMapping: remoteMapping,
-	}
+	ch := make(chan *types.Message, 100)
 
 	for _, remoteConfig := range cfg.Remotes {
 		remote := createRemote(remoteConfig.Type)
@@ -66,21 +46,14 @@ func main() {
 			panic("Remote not found: " + remoteConfig.Type)
 		}
 		fmt.Printf("Initializing remote '%s'\n", remoteConfig.Name)
-		err = remote.Initialize(bus, remoteConfig)
+		err = remote.Initialize(ch, remoteConfig)
 		if err != nil {
 			panic(err)
 		}
 		remoteMapping[remoteConfig.Name] = remote
 	}
 
-	minetestRemote := &minetest.MinetestRemoteChat{}
-	minetestRemote.Initialize(bus, nil)
-	remoteMapping["minetest"] = minetestRemote
+	fmt.Printf("Initialized %d remotes\n", len(cfg.Remotes))
 
-	fmt.Printf("ok\n")
-
-	sig := make(chan os.Signal, 1)
-	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
-	<-sig
-	fmt.Printf("exiting\n")
+	http.ListenAndServe(fmt.Sprintf(":%d", cfg.Port), nil)
 }

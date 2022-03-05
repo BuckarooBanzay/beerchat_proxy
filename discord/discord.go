@@ -8,13 +8,13 @@ import (
 )
 
 type DiscordRemoteChat struct {
-	bus     types.EventBus
+	ch      chan *types.Message
 	cfg     *types.RemoteConfig
 	session *discordgo.Session
 }
 
-func (remote *DiscordRemoteChat) Initialize(bus types.EventBus, cfg *types.RemoteConfig) error {
-	remote.bus = bus
+func (remote *DiscordRemoteChat) Initialize(ch chan *types.Message, cfg *types.RemoteConfig) error {
+	remote.ch = ch
 	remote.cfg = cfg
 	fmt.Printf("Creating discord connection for '%s'\n", cfg.Name)
 
@@ -40,11 +40,12 @@ func (remote *DiscordRemoteChat) messageCreate(s *discordgo.Session, m *discordg
 	}
 
 	fmt.Printf("discord msg, content: %s, username: %s, channel: %s\n", m.Content, m.Author.Username, m.ChannelID)
-	remote.bus.OnMessageReceived(remote, &types.Message{
-		Type:    types.DiscordType,
-		Name:    remote.cfg.Name,
-		Message: m.Content,
-	})
+	msg := &types.Message{
+		RemoteType: types.DiscordType,
+		Name:       remote.cfg.Name,
+		Message:    m.Content,
+	}
+	remote.ch <- msg
 }
 
 func (remote *DiscordRemoteChat) SendMessage(msg *types.Message) error {
