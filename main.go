@@ -6,11 +6,10 @@ import (
 	"beerchat_proxy/irc"
 	"beerchat_proxy/minetest"
 	"beerchat_proxy/types"
+	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
-
-	"github.com/sirupsen/logrus"
 )
 
 func createRemote(remoteType types.RemoteType) types.RemoteChat {
@@ -38,13 +37,12 @@ func (bus *MainEventBus) OnMessageReceived(remote types.RemoteChat, msg *types.M
 
 		err := outRemote.SendMessage(msg)
 		if err != nil {
-			logrus.Debugf("Could not send message: %s", err.Error())
+			fmt.Printf("Could not send message: %s\n", err.Error())
 		}
 	}
 }
 
 func main() {
-	logrus.SetLevel(logrus.DebugLevel)
 	file, err := os.Open("beerchat.json")
 	if err != nil {
 		panic(err.Error())
@@ -67,7 +65,7 @@ func main() {
 		if remote == nil {
 			panic("Remote not found: " + remoteConfig.Type)
 		}
-		logrus.Debugf("Initializing remote '%s'\n", remoteConfig.Name)
+		fmt.Printf("Initializing remote '%s'\n", remoteConfig.Name)
 		err = remote.Initialize(bus, remoteConfig)
 		if err != nil {
 			panic(err)
@@ -79,10 +77,10 @@ func main() {
 	minetestRemote.Initialize(bus, nil)
 	remoteMapping["minetest"] = minetestRemote
 
-	logrus.Debugf("ok")
+	fmt.Printf("ok\n")
 
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 	<-sig
-	logrus.Debugf("exiting")
+	fmt.Printf("exiting\n")
 }

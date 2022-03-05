@@ -4,6 +4,6 @@ services:
     beerchat:
         build: .
         volumes:
-            - "./beerchat.js:/data/beerchat.js"
+            - "./beerchat.json:/beerchat.json"
         ports:
             - "8080:8080"
