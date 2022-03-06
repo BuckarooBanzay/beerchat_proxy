@@ -13,6 +13,8 @@ type MessageType string
 const (
 	NormalType MessageType = "message"
 	MeType     MessageType = "me"
+	JoinType   MessageType = "join"
+	LeaveType  MessageType = "leave"
 )
 
 type Message struct {
@@ -22,5 +24,4 @@ type Message struct {
 	Username    string      `json:"username"`
 	Channel     string      `json:"channel"`
 	Message     string      `json:"message"`
-	Direct      bool        `json:"direct"`
 }

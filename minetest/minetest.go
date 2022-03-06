@@ -7,10 +7,10 @@ import (
 )
 
 type MinetestRemoteChat struct {
-	ch chan *types.Message
+	ch chan<- *types.Message
 }
 
-func (remote *MinetestRemoteChat) Initialize(ch chan *types.Message, cfg *types.RemoteConfig) error {
+func (remote *MinetestRemoteChat) Initialize(ch chan<- *types.Message, cfg *types.RemoteConfig) error {
 	//TODO: setup http endpoints
 	remote.ch = ch
 	path := "/"

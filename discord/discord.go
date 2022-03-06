@@ -8,12 +8,12 @@ import (
 )
 
 type DiscordRemoteChat struct {
-	ch      chan *types.Message
+	ch      chan<- *types.Message
 	cfg     *types.RemoteConfig
 	session *discordgo.Session
 }
 
-func (remote *DiscordRemoteChat) Initialize(ch chan *types.Message, cfg *types.RemoteConfig) error {
+func (remote *DiscordRemoteChat) Initialize(ch chan<- *types.Message, cfg *types.RemoteConfig) error {
 	remote.ch = ch
 	remote.cfg = cfg
 	fmt.Printf("Creating discord connection for '%s'\n", cfg.Name)

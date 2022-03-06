@@ -9,12 +9,12 @@ import (
 )
 
 type IRCRemoteChat struct {
-	ch         chan *types.Message
+	ch         chan<- *types.Message
 	cfg        *types.RemoteConfig
 	connection *irc.Connection
 }
 
-func (remote *IRCRemoteChat) Initialize(ch chan *types.Message, cfg *types.RemoteConfig) error {
+func (remote *IRCRemoteChat) Initialize(ch chan<- *types.Message, cfg *types.RemoteConfig) error {
 	remote.ch = ch
 	remote.cfg = cfg
 
