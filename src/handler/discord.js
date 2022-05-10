@@ -71,13 +71,16 @@ module.exports = class {
 					// player message
 					if (event.username){
 						const mapped_username = `${event.type == "minetest" ? "" : "@" + event.name}`;
+						// escape formatting characters
+						const escaped_username = event.username.replace(/([*_`~|])/g, "\\$1");
+						const escaped_message = event.message.replace(/([*_`~|])/g, "\\$1");
 
 						if (event.message_type == "me"){
 							// me message
-							message = `* **${event.username}${mapped_username}** ${event.message}`;
+							message = `* **${escaped_username}${mapped_username}** ${escaped_message}`;
 						} else {
 							// normal message
-							message = `**<${event.username}${mapped_username}>** ${event.message}`;
+							message = `**<${escaped_username}${mapped_username}>** ${escaped_message}`;
 						}
 					} else {
 						// system message
