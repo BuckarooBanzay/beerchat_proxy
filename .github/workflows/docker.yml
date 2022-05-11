@@ -18,7 +18,7 @@ jobs:
       run: ./integration-test.sh
 
     - name: docker publish
-      uses: elgohr/Publish-Docker-Github-Action@master
+      uses: elgohr/Publish-Docker-Github-Action@v4
       with:
         name: beerchat/beerchat
         username: ${{ secrets.DOCKER_USERNAME }}
