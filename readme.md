@@ -22,29 +22,29 @@ curl -X POST \
 beerchat.js
 ```js
 module.exports = {
-  "debug": true,
+	"debug": true,
 
-  "remotes": [{
-    "name": "IRC",
-    "type": "irc",
+	"remotes": [{
+		"name": "IRC",
+		"type": "irc",
 		"debug": true,
-    "host": "chat.freenode.net",
-    "username": "pandorabot_test",
-    "password": "my-password",
+		"host": "chat.freenode.net",
+		"username": "pandorabot_test",
+		"password": "my-password",
 		"system_channel": "main",
-    "channels": {
-      "main": "pandorabox-test"
-    }
-  },{
-    "name": "Discord",
-    "type": "discord",
+		"channels": {
+			"main": "pandorabox-test"
+		}
+	},{
+		"name": "Discord",
+		"type": "discord",
 		"debug": true,
 		"token": "the-discord-token",
 		"system_channel": "main",
-    "channels": {
-      "main": "test"
-    }
-  }]
+		"channels": {
+			"main": "test"
+		}
+	}]
 };
 ```
 
