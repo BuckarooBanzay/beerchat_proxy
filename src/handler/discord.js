@@ -100,7 +100,7 @@ module.exports = class {
 
 		this.client.on('message', msg => {
 			if (remote.debug){
-				console.log("discord message", msg.author.tag)
+				console.log("discord message", msg.author.tag);
 			}
 
 			if (msg.author.tag == this.client.user.tag){
