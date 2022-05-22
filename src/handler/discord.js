@@ -73,7 +73,7 @@ module.exports = class {
 						const mapped_username = `${event.type == "minetest" ? "" : "@" + event.name}`;
 						// escape formatting characters
 						const escaped_username = event.username.replace(/([*_`~|])/g, "\\$1");
-						const escaped_message = event.message.replace(/([*_`~|])/g, "\\$1");
+						const escaped_message = event.message.replace(/(?<!https?:\/\/\S*)([*_`~|])/g, "\\$1");
 
 						if (event.message_type == "me"){
 							// me message
